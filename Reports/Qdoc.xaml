@@ -1,0 +1,27 @@
+﻿<Page x:Class="SR28.Reports.Qdoc"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+       Height="600" Width="700" Title="Qdoc"
+	>
+
+    <!--<Grid>-->
+    <FlowDocumentReader Name="docv" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="True" ZoomIncrement="5" Zoom="50">
+        <FlowDocumentReader.Document>
+            <FlowDocument>
+                <BlockUIContainer>
+                    <Label Name ="hlab" VerticalContentAlignment="Center" Height="30"  Content="Comparison Table" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+                </BlockUIContainer>
+                <Table Name="T1" CellSpacing="2px">
+                    <Table.Columns>
+                        <TableColumn  Width="64" Name="c1" Background="White"  />
+                        <TableColumn Width="700" Name="c2" Background="LightGray" />
+                    </Table.Columns>
+                </Table>
+            </FlowDocument>
+        </FlowDocumentReader.Document>
+    </FlowDocumentReader>
+    <!--</Grid>-->
+</Page>

@@ -1,0 +1,92 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="SR28"#>
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-16" />
+    <title>Compare Foods by Nutrient.</title>
+    <style type="text/css">
+        h1 {
+            text-align:center;
+           }
+		.Light
+		{
+			border: 1px solid #C0C0C0;
+			font-family: Corbel;
+			font-size: small;
+			font-weight: bold;
+			font-style: normal;
+			color: blue;
+            background-color:lightyellow;
+			vertical-align: middle;
+			text-align: right;
+			width: 70px;
+		}
+		.Dark
+		{
+			border: 1px solid #C0C0C0;
+			font-family: Corbel;
+			font-size: small;
+			font-weight: bold;
+			font-style: normal;
+			color: #808080;
+			text-align: right;
+			width:70px;
+		}
+
+		.Black
+		{
+			font-family: Corbel;
+			font-size: small;
+			font-weight: bold;
+			color: #000000;
+			width:1000px;
+		}
+		.Blue
+		{
+			border: 1px solid #C0C0C0;
+			font-family: Corbel;
+			font-size: medium;
+			font-weight: bold;
+			font-style: italic;
+            background-color:lightyellow;
+			color: #0000FF;
+			text-align: center;
+			width:400px;
+		}
+
+    </style>
+
+</head>
+<body>
+<h1>Comparison Table</h1>
+<hr />
+
+<table>
+<#foreach (Nutr4Foo x in Nuts4SelFoo.repList)
+            {#>
+                <#if (x.Type == 0)
+                {#>
+                    <tr>
+                    <td class="Light"><#=x.Unit#></td>
+                    <td class="Blue"><#=x.Name#></td>
+                    </tr>
+                <#}#>
+                <#if (x.Type == 1)
+                {#>
+                    <tr>
+                    <td class="Dark"><#=string.Format(Helper.StrFormat(x.Dec), x.Val)#></td>
+                    <td class="Black"><#=x.Name#></td>
+                    </tr>
+                <#}
+            }#>
+</table>
+
+</body>
+</html>
