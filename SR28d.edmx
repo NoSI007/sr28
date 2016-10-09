@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SR28Model.Store" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FD_GROUP">
+          <Key>
+            <PropertyRef Name="FdGrp_CD" />
+          </Key>
+          <Property Name="FdGrp_CD" Type="smallint" Nullable="false" />
+          <Property Name="FdGrp_Desc" Type="nvarchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="FOOD_DES">
+          <Key>
+            <PropertyRef Name="NDB_No" />
+          </Key>
+          <Property Name="NDB_No" Type="int" Nullable="false" />
+          <Property Name="FdGrp_Cd" Type="smallint" Nullable="false" />
+          <Property Name="Long_Desc" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NUT_DATA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="NUT_DATA">
+          <Key>
+            <PropertyRef Name="NDB_No" />
+            <PropertyRef Name="Nutr_No" />
+          </Key>
+          <Property Name="NDB_No" Type="int" Nullable="false" />
+          <Property Name="Nutr_No" Type="smallint" Nullable="false" />
+          <Property Name="Nutr_Val" Type="real" />
+        </EntityType>
+        <EntityType Name="NUTR_DEF">
+          <Key>
+            <PropertyRef Name="Nutr_No" />
+          </Key>
+          <Property Name="Nutr_No" Type="smallint" Nullable="false" />
+          <Property Name="Units" Type="nvarchar" MaxLength="7" Nullable="false" />
+          <Property Name="Tagname" Type="nvarchar" MaxLength="20" />
+          <Property Name="NutrDesc" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Num_Dec" Type="smallint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FOOD_DES_FD_GROUP">
+          <End Role="FD_GROUP" Type="Self.FD_GROUP" Multiplicity="1" />
+          <End Role="FOOD_DES" Type="Self.FOOD_DES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FD_GROUP">
+              <PropertyRef Name="FdGrp_CD" />
+            </Principal>
+            <Dependent Role="FOOD_DES">
+              <PropertyRef Name="FdGrp_Cd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NUT_DATA_FOOD_DES">
+          <End Role="FOOD_DES" Type="Self.FOOD_DES" Multiplicity="1" />
+          <End Role="NUT_DATA" Type="Self.NUT_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FOOD_DES">
+              <PropertyRef Name="NDB_No" />
+            </Principal>
+            <Dependent Role="NUT_DATA">
+              <PropertyRef Name="NDB_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NUT_DATA_NUTR_DEF">
+          <End Role="NUTR_DEF" Type="Self.NUTR_DEF" Multiplicity="1" />
+          <End Role="NUT_DATA" Type="Self.NUT_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NUTR_DEF">
+              <PropertyRef Name="Nutr_No" />
+            </Principal>
+            <Dependent Role="NUT_DATA">
+              <PropertyRef Name="Nutr_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SR28ModelStoreContainer">
+          <EntitySet Name="FD_GROUP" EntityType="Self.FD_GROUP" store:Type="Tables" />
+          <EntitySet Name="FOOD_DES" EntityType="Self.FOOD_DES" store:Type="Tables" />
+          <EntitySet Name="NUTR_DEF" EntityType="Self.NUTR_DEF" store:Type="Tables" />
+          <EntitySet Name="NUT_DATA" EntityType="Self.NUT_DATA" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[NUT_DATA].[NDB_No] AS [NDB_No], 
+[NUT_DATA].[Nutr_No] AS [Nutr_No], 
+[NUT_DATA].[Nutr_Val] AS [Nutr_Val]
+FROM [NUT_DATA] AS [NUT_DATA]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_FOOD_DES_FD_GROUP" Association="Self.FK_FOOD_DES_FD_GROUP">
+            <End Role="FD_GROUP" EntitySet="FD_GROUP" />
+            <End Role="FOOD_DES" EntitySet="FOOD_DES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NUT_DATA_FOOD_DES" Association="Self.FK_NUT_DATA_FOOD_DES">
+            <End Role="FOOD_DES" EntitySet="FOOD_DES" />
+            <End Role="NUT_DATA" EntitySet="NUT_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NUT_DATA_NUTR_DEF" Association="Self.FK_NUT_DATA_NUTR_DEF">
+            <End Role="NUTR_DEF" EntitySet="NUTR_DEF" />
+            <End Role="NUT_DATA" EntitySet="NUT_DATA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SR28Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FD_GROUP">
+          <Key>
+            <PropertyRef Name="FdGrp_CD" />
+          </Key>
+          <Property Name="FdGrp_CD" Type="Int16" Nullable="false" />
+          <Property Name="FdGrp_Desc" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FOOD_DES" Relationship="Self.FK_FOOD_DES_FD_GROUP" FromRole="FD_GROUP" ToRole="FOOD_DES" />
+        </EntityType>
+        <EntityType Name="FOOD_DES">
+          <Key>
+            <PropertyRef Name="NDB_No" />
+          </Key>
+          <Property Name="NDB_No" Type="Int32" Nullable="false" />
+          <Property Name="FdGrp_Cd" Type="Int16" Nullable="false" />
+          <Property Name="Long_Desc" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FD_GROUP" Relationship="Self.FK_FOOD_DES_FD_GROUP" FromRole="FOOD_DES" ToRole="FD_GROUP" />
+          <NavigationProperty Name="NUT_DATA" Relationship="Self.FK_NUT_DATA_FOOD_DES" FromRole="FOOD_DES" ToRole="NUT_DATA" />
+        </EntityType>
+        <EntityType Name="NUTR_DEF">
+          <Key>
+            <PropertyRef Name="Nutr_No" />
+          </Key>
+          <Property Name="Nutr_No" Type="Int16" Nullable="false" />
+          <Property Name="Units" Type="String" MaxLength="7" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tagname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="NutrDesc" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Num_Dec" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="NUT_DATA" Relationship="Self.FK_NUT_DATA_NUTR_DEF" FromRole="NUTR_DEF" ToRole="NUT_DATA" />
+        </EntityType>
+        <EntityType Name="NUT_DATA">
+          <Key>
+            <PropertyRef Name="NDB_No" />
+            <PropertyRef Name="Nutr_No" />
+          </Key>
+          <Property Name="NDB_No" Type="Int32" Nullable="false" />
+          <Property Name="Nutr_No" Type="Int16" Nullable="false" />
+          <Property Name="Nutr_Val" Type="Single" />
+          <NavigationProperty Name="FOOD_DES" Relationship="Self.FK_NUT_DATA_FOOD_DES" FromRole="NUT_DATA" ToRole="FOOD_DES" />
+          <NavigationProperty Name="NUTR_DEF" Relationship="Self.FK_NUT_DATA_NUTR_DEF" FromRole="NUT_DATA" ToRole="NUTR_DEF" />
+        </EntityType>
+        <Association Name="FK_FOOD_DES_FD_GROUP">
+          <End Role="FD_GROUP" Type="Self.FD_GROUP" Multiplicity="1" />
+          <End Role="FOOD_DES" Type="Self.FOOD_DES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FD_GROUP">
+              <PropertyRef Name="FdGrp_CD" />
+            </Principal>
+            <Dependent Role="FOOD_DES">
+              <PropertyRef Name="FdGrp_Cd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NUT_DATA_FOOD_DES">
+          <End Role="FOOD_DES" Type="Self.FOOD_DES" Multiplicity="1" />
+          <End Role="NUT_DATA" Type="Self.NUT_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FOOD_DES">
+              <PropertyRef Name="NDB_No" />
+            </Principal>
+            <Dependent Role="NUT_DATA">
+              <PropertyRef Name="NDB_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NUT_DATA_NUTR_DEF">
+          <End Role="NUTR_DEF" Type="Self.NUTR_DEF" Multiplicity="1" />
+          <End Role="NUT_DATA" Type="Self.NUT_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NUTR_DEF">
+              <PropertyRef Name="Nutr_No" />
+            </Principal>
+            <Dependent Role="NUT_DATA">
+              <PropertyRef Name="Nutr_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SR28e" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FD_GROUP" EntityType="Self.FD_GROUP" />
+          <EntitySet Name="FOOD_DES" EntityType="Self.FOOD_DES" />
+          <EntitySet Name="NUTR_DEF" EntityType="Self.NUTR_DEF" />
+          <EntitySet Name="NUT_DATA" EntityType="Self.NUT_DATA" />
+          <AssociationSet Name="FK_FOOD_DES_FD_GROUP" Association="Self.FK_FOOD_DES_FD_GROUP">
+            <End Role="FD_GROUP" EntitySet="FD_GROUP" />
+            <End Role="FOOD_DES" EntitySet="FOOD_DES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NUT_DATA_FOOD_DES" Association="Self.FK_NUT_DATA_FOOD_DES">
+            <End Role="FOOD_DES" EntitySet="FOOD_DES" />
+            <End Role="NUT_DATA" EntitySet="NUT_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NUT_DATA_NUTR_DEF" Association="Self.FK_NUT_DATA_NUTR_DEF">
+            <End Role="NUTR_DEF" EntitySet="NUTR_DEF" />
+            <End Role="NUT_DATA" EntitySet="NUT_DATA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SR28ModelStoreContainer" CdmEntityContainer="SR28e">
+          <EntitySetMapping Name="FD_GROUP">
+            <EntityTypeMapping TypeName="SR28Model.FD_GROUP">
+              <MappingFragment StoreEntitySet="FD_GROUP">
+                <ScalarProperty Name="FdGrp_CD" ColumnName="FdGrp_CD" />
+                <ScalarProperty Name="FdGrp_Desc" ColumnName="FdGrp_Desc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FOOD_DES">
+            <EntityTypeMapping TypeName="SR28Model.FOOD_DES">
+              <MappingFragment StoreEntitySet="FOOD_DES">
+                <ScalarProperty Name="NDB_No" ColumnName="NDB_No" />
+                <ScalarProperty Name="FdGrp_Cd" ColumnName="FdGrp_Cd" />
+                <ScalarProperty Name="Long_Desc" ColumnName="Long_Desc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NUTR_DEF">
+            <EntityTypeMapping TypeName="SR28Model.NUTR_DEF">
+              <MappingFragment StoreEntitySet="NUTR_DEF">
+                <ScalarProperty Name="Nutr_No" ColumnName="Nutr_No" />
+                <ScalarProperty Name="Units" ColumnName="Units" />
+                <ScalarProperty Name="Tagname" ColumnName="Tagname" />
+                <ScalarProperty Name="NutrDesc" ColumnName="NutrDesc" />
+                <ScalarProperty Name="Num_Dec" ColumnName="Num_Dec" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NUT_DATA">
+            <EntityTypeMapping TypeName="SR28Model.NUT_DATA">
+              <MappingFragment StoreEntitySet="NUT_DATA">
+                <ScalarProperty Name="NDB_No" ColumnName="NDB_No" />
+                <ScalarProperty Name="Nutr_No" ColumnName="Nutr_No" />
+                <ScalarProperty Name="Nutr_Val" ColumnName="Nutr_Val" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

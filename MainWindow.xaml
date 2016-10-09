@@ -1,0 +1,234 @@
+﻿<Window x:Class="SR28.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="460" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ListBorder}"/>
+            <Setter Property="Background" Value="Silver"/>
+
+        </Style>
+    </Window.Resources>
+    <Window.Effect>
+        <DropShadowEffect BlurRadius="50" Color="#FF007BFF" RenderingBias="Quality" ShadowDepth="19" Direction="45"/>
+    </Window.Effect>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40*" MinWidth="120" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="60*" MinWidth="120"/>
+        </Grid.ColumnDefinitions>
+        <Canvas x:Name="Jack"  Grid.Row="0"   Grid.Column="0"  Grid.ColumnSpan="3"  RenderTransformOrigin="0.5,0.5" >
+            <TextBlock Canvas.Top="7" Canvas.Left="205" Text="SR28"   TextWrapping="NoWrap"  Foreground="#553322" FontSize="24"  Opacity="0.7" TextAlignment="Left"  FontWeight="Bold" >
+            </TextBlock>
+            <TextBlock Canvas.Top="7" Canvas.Left="290" Text="Browser" TextWrapping="NoWrap" Foreground="#AAEE44" FontSize="24" Opacity="0.85" TextAlignment="Left" FontWeight="Normal" RenderTransformOrigin="0.5,0.5">
+            </TextBlock>
+
+        </Canvas>
+
+        <Border Grid.Row="1"
+                BorderBrush="#FF4355C1"
+                BorderThickness="2,2,2,2"
+                CornerRadius="4,4,4,4"
+                Margin="8,2,2,8">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="36" />
+                    <RowDefinition Height="36" />
+                    <RowDefinition Height="120" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="1" BorderBrush="Transparent">
+                    <Label Margin="5,0" FontFamily="Corbel" FontSize="13.333" FontWeight="Bold" Content="Browse and search USDA Food Database" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Style="{DynamicResource CenLabel}" Foreground="#FF2800FF"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="Transparent" >
+                    <StackPanel Orientation="Horizontal" Margin="5,0" >
+                        <TextBox Height="30"  x:Name="Wild" Width="200"  HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <Button Height="30" Margin="5,0" x:Name="z_go" Width="60" Content="Find" Click="z_go_Click"   Foreground="#FFB400FF" BorderBrush="#FF00CBFF"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Margin="5,0" Grid.Column="0" BorderBrush="White" BorderThickness="1" Opacity=".85">
+                    <ListView  ItemsSource="{Binding}" x:Name="grpList" SelectionMode="Single"   SelectedValuePath="FdGrp_CD" SelectionChanged="grpList_SelectionChanged" Style="{StaticResource LVStyle}" Foreground="#FF4000FF" FontSize="14" FontWeight="Bold" >
+                        <ListView.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="Control.HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Control.VerticalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn x:Name="fdGrp_Desc" Header="  Food Groups  " Width="300">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding FdGrp_Desc}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Border>
+                <Border Margin="5,0" Grid.Row="3" Background="#FF99D999" Opacity=".75" Grid.Column="0" BorderThickness="1" BorderBrush="White">
+
+                    <ListView  MaxHeight="300"   x:Name="FooList" DisplayMemberPath="Long_Desc" ItemsSource="{Binding ''}" SelectedValuePath="NDB_No" SelectionMode="Single" Style="{StaticResource LVStyle}" Foreground="#FF0C3005" FontSize="13" FontWeight="Bold" >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn x:Name="foolisting" Header="  Foods" Width="300">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Long_Desc}" TextTrimming="WordEllipsis" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border Margin="2,2,8,8"
+                Grid.Column="2"
+                Grid.Row="1"
+                BorderThickness="2,2,2,2"
+                CornerRadius="4,4,4,4"
+                BorderBrush="#FF4355C1"
+                Grid.RowSpan="2">
+            <Grid >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="36" />
+                    <RowDefinition Height="36" />
+                    <RowDefinition Height="120" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Border  HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" BorderThickness="5">
+                    <Grid >
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="38" />
+                            <RowDefinition Height="38"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5,0">
+                            <Button FontWeight="Bold" Margin="0,3,3,3" Width="60" x:Name="z_add" Content="Add"  Foreground="Blue"  Click="z_add_Click" />
+
+                            <Button FontWeight="Bold" Margin="6,3,3,3" Width="60"  x:Name="z_del" Content="Remove"  Foreground="#770000" Click="z_del_Click" />
+                            <Button FontWeight="Bold" Margin="19,3" Width="60"  x:Name="z_clear" Content="Clear"  Foreground="#FFFF006E" Click="z_clear_Click"    />
+                            <Button FontWeight="Bold" Margin="19,3" Width="60"  x:Name="z_show" Content="Show"  Foreground="#FF0096FF" Click="z_show_click"    />
+                            <Button FontWeight="Bold" Margin="3,3" Width="60"  x:Name="z_list" Content="List"  Foreground="#FF006EFF" Click="z_list_click"    />
+                            
+                        </StackPanel>
+                        <StackPanel Name="actPanel" Background="AliceBlue" Grid.Row="1" Orientation="Horizontal" Margin="5,0">
+                            <Button FontWeight="Bold" Margin="0,3" Width="99" x:Name="z_comp"  Content="Table Compare"  Foreground="DarkGreen"  Click="z_comp_Click" />
+                            <Button FontWeight="Bold" Margin="10,3" Width="99" x:Name="z_comp1" Content="Panel Compare"  Foreground="DarkGreen" Click="z_PanelComp" />
+                            
+                            <Button FontWeight="Bold" Margin="0,3" Width="99" x:Name="z_htmlRep"  Content="Html Report"  Foreground="Black"  Click="z_htmlRep_Click" />
+                            <!--<Button FontWeight="Bold" Margin="10,3" Width="99" x:Name="z_xamlRep" Content="Xaml Report"  Foreground="Black" Click="z_xamlRep_Click" />-->
+                        </StackPanel>
+                        <Grid Grid.Row="2" Background="LightGray">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40*" MinHeight="20" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="60*" MinHeight="20"/>
+                            </Grid.RowDefinitions>
+                            
+                            <Border BorderBrush="#FF4355C1"  BorderThickness="2"  CornerRadius="4" Margin="1">
+                                <ListBox x:Name="cmp" Background="Transparent" Style="{StaticResource LBStyle}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="14" FontWeight="Bold">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  Width="300"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Border>
+
+                            <Border Margin="1"  Grid.Row="2"   BorderThickness="2,2,2,2"   CornerRadius="4"  Background="White"      BorderBrush="#FF4355C1">
+                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="10"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock x:Name="BTHead" Style="{StaticResource CenterHead}"/>
+                                    <ListView Grid.Row="1" ScrollViewer.PanningRatio="1"  x:Name="Lv4Nuts" SelectionMode="Single"  ItemsSource="{Binding}"      >
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn x:Name="Values" Width="90" Header="Values" >
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Border Style="{StaticResource AppBorder}">
+                                                                <TextBlock  Style="{StaticResource RBlock}"  Text="{Binding Value, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                                <GridViewColumn x:Name="Units" Width="64" Header="Units" >
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Border Style="{StaticResource AppBorder}">
+                                                                <TextBlock  Style="{StaticResource CenterHead}" Text="{Binding Units, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                                <GridViewColumn x:Name="Nutrient"  Header="Nutrient" Width="320" >
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Border Style="{StaticResource AppBorder}">
+                                                                <TextBlock   Style="{StaticResource TBlock}" Text="{Binding Nutrient, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                        <ListView.ItemContainerStyle>
+                                            <Style>
+                                                <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                                                <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                                                <Setter Property="FrameworkElement.HorizontalAlignment" Value="Stretch"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="Selector.IsSelected" Value="true">
+                                                        <Setter Property="Control.Background" Value="Magenta"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                    </ListView>
+
+                                </Grid>
+                            </Border>
+
+                            <GridSplitter 
+                      Grid.Row="1"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Stretch"
+                      Background="red"
+                      Height="5" />
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Label   x:Name="z_cmp_count" Width="auto" Height="auto" Opacity="1"  Grid.Column="1" Grid.Row="1"  Style="{StaticResource CenLabel}" Margin="10,0"/>
+
+            </Grid>
+        </Border>
+
+        <GridSplitter Grid.Row="1"
+                      Grid.Column="1"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Stretch"
+                      Background="Yellow"
+                      Width="2" />
+    </Grid>
+</Window>
