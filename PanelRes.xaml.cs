@@ -127,7 +127,7 @@ namespace SR28
             {
                 MessageBox.Show(ex.Message);
             }
-            int x = 10;
+            
         }
 
 
